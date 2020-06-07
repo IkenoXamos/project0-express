@@ -20,7 +20,7 @@ pipeline {
     stage('Deploy') {
       when {
         expression {
-          currentBuild.result == null || currentBuild.result == 'SUCCESS'
+          currentBuild.currentResult == null || currentBuild.currentResult == 'SUCCESS'
         }
       }
       steps {
@@ -39,7 +39,7 @@ pipeline {
 
   environment {
     commit = "${env.GIT_COMMIT}"
-    status = currentBuild.result
+    status = "${currentBuild.currentResult}"
     description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${env.status}\n\n**Changes:**\n- `${commit}` - ${env.GIT_AUTHOR_NAME}"
     title = "${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}"
     footer = 'Jenkins v2.222.4, Discord Notifier v1.4.11'
