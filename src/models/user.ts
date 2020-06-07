@@ -10,5 +10,5 @@ export default interface User {
 
 export interface Role {
   id: number;
-  role: string;
+  name: string;
 }
