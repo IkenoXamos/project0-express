@@ -55,9 +55,9 @@ pipeline {
 
         echo "${commit}"
 
-        def description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${env.status}\n\n**Changes:**\n- `${commit}` - ${env.GIT_AUTHOR_NAME}"
+        def description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${status}\n\n**Changes:**\n- `${commit}` - ${env.GIT_AUTHOR_NAME}"
 
-        discordSend description: "${env.description}", footer: "${env.footer}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${env.title}", webhookURL: "${env.url}"
+        discordSend description: "${description}", footer: "${footer}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${title}", webhookURL: "${url}"
       }
     }
   }
