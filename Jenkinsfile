@@ -38,7 +38,7 @@ pipeline {
   }
 
   environment {
-    commit = "${env.GIT_COMMIT}"
+    commit = "${env.GIT_COMMIT | cut -c 6}"
     status = "${currentBuild.currentResult}"
     description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${env.status}\n\n**Changes:**\n- `${commit}` - ${env.GIT_AUTHOR_NAME}"
     title = "${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}"
