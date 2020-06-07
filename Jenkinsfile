@@ -32,13 +32,7 @@ pipeline {
 
     stage('Notify') {
       steps {
-        discordSend
-          description: 'Jenkins Build for Express Project 0',
-          footer: 'Jenkins v2.222.4, Discord Notifier v1.4.11',
-          link: env.BUILD_URL,
-          result: currentBuild.currentResult,
-          title: JOB_NAME,
-          webhookURL: 'https://discordapp.com/api/webhooks/717959657057943573/3UlE5etPVKWEZklUahQSRCG-JE_fc34Ha3cMxY16j0jShXQ6J5NsiA8f3u5Lb5ZuSpKH'
+        discordSend description: 'Jenkins Build for Express Project 0', footer: 'Jenkins v2.222.4, Discord Notifier v1.4.11', link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: 'https://discordapp.com/api/webhooks/717959657057943573/3UlE5etPVKWEZklUahQSRCG-JE_fc34Ha3cMxY16j0jShXQ6J5NsiA8f3u5Lb5ZuSpKH'
       }
     }
   }
