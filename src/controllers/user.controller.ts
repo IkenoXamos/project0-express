@@ -2,7 +2,7 @@ import { User } from '../models/user';
 import { Request, Response, Router } from 'express';
 
 export default class UserController {
-  public readonly path: string = "/user";
+  public readonly path: string = '/user';
   public readonly router: Router = Router();
 
   public initializeRoutes() {
