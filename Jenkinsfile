@@ -50,7 +50,7 @@ pipeline {
         echo "${url}"
 
         def commit = sh (
-          script: "${env.GIT_COMMIT} | cut -c -6",
+          script: "echo ${env.GIT_COMMIT} | cut -c -6",
           returnStdout: true
         ).trim()
 
