@@ -25,14 +25,6 @@ pipeline {
       }
       steps {
         echo 'Deploying...'
-        sh 'kubectl get pods'
-        sh 'kubectl version'
-      }
-    }
-
-    stage('Check env') {
-      steps {
-        sh 'printenv | sort'
       }
     }
   }
