@@ -54,7 +54,11 @@ pipeline {
           returnStdout: true
         ).trim()
 
-        description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${status}\n\n**Changes:**\n- `${commit}` *${GIT_COMMIT_MESSAGE}* - ${GIT_AUTHOR_EMAIL}"
+        description = """**Build:** ${env.BUILD_NUMBER}
+        **Status:** ${status}
+
+        **Changes:**
+        - `${commit}` *${GIT_COMMIT_MESSAGE}* - ${GIT_AUTHOR_EMAIL}"""
 
         discordSend description: "${description}", footer: "${footer}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${title}", webhookURL: "${url}"
       }
