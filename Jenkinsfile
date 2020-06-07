@@ -33,10 +33,7 @@ pipeline {
     always {
 
       script {
-        status = sh (
-          script: "${currentBuild.currentResult} | tr '[:upper:]' '[:lower:]'",
-          returnStdout: true
-        ).trim()
+        status = "${currentBuild.currentResult.toLowerCase()}"
 
         commit = sh (
           script: "echo ${env.GIT_COMMIT} | cut -c -6",
