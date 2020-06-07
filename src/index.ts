@@ -1,5 +1,10 @@
 import App from 'app';
+import UserController from 'controllers/user.controller';
 
-const app = new App([], 9001);
+const app = new App(
+  [
+    new UserController(),
+  ],
+  9001);
 
 app.listen();
