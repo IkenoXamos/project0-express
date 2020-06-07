@@ -40,19 +40,22 @@ pipeline {
   post {
     always {
 
-      status = "${currentBuild.currentResult}"
-      description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${env.status}\n\n**Changes:**\n- `${commit}` - ${env.GIT_AUTHOR_NAME}"
-      title = "${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}"
-      footer = 'Jenkins v2.222.4, Discord Notifier v1.4.11'
-      url = 'https://discordapp.com/api/webhooks/717959657057943573/3UlE5etPVKWEZklUahQSRCG-JE_fc34Ha3cMxY16j0jShXQ6J5NsiA8f3u5Lb5ZuSpKH'
-
+      script {
+        status = "${currentBuild.currentResult}"
+        description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${env.status}\n\n**Changes:**\n- `${commit}` - ${env.GIT_AUTHOR_NAME}"
+        title = "${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}"
+        footer = 'Jenkins v2.222.4, Discord Notifier v1.4.11'
+        url = 'https://discordapp.com/api/webhooks/717959657057943573/3UlE5etPVKWEZklUahQSRCG-JE_fc34Ha3cMxY16j0jShXQ6J5NsiA8f3u5Lb5ZuSpKH'
+      }
       echo "${status}"
       echo "${url}"
 
-      commit = sh (
-        script: "${env.GIT_COMMIT} | cut -c -6",
-        returnStdout: true
-      ).trim()
+      script {
+        commit = sh (
+          script: "${env.GIT_COMMIT} | cut -c -6",
+          returnStdout: true
+        ).trim()
+      }
 
       echo "${commit}"
 
