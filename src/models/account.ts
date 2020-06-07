@@ -1,4 +1,4 @@
-export class Account {
+export default class Account {
   id: number;
   balance: number;
   status: AccountStatus;
