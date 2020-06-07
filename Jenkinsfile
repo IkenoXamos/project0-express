@@ -60,7 +60,13 @@ pipeline {
         **Changes:**
         - `${commit}` *${GIT_COMMIT_MESSAGE}* - ${GIT_AUTHOR_EMAIL}"""
 
-        discordSend description: "${description}", footer: "${footer}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${title}", webhookURL: "${url}"
+        discordSend
+          description: "${description}",
+          footer: "${footer}",
+          link: env.BUILD_URL,
+          result: currentBuild.currentResult,
+          title: "${title}",
+          webhookURL: "${url}"
       }
     }
   }
