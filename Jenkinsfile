@@ -41,8 +41,13 @@ pipeline {
     always {
 
       script {
-        status = commit = sh (
+        status = sh (
           script: "${currentBuild.currentResult} | tr '[:upper:]' '[:lower:]'",
+          returnStdout: true
+        ).trim()
+
+        commit = sh (
+          script: "echo ${env.GIT_COMMIT} | cut -c -6",
           returnStdout: true
         ).trim()
 
@@ -60,7 +65,7 @@ pipeline {
           returnStdout: true
         ).trim()
 
-        description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${status}\n\n**Changes:**\n- `${commit}` - ${GIT_COMMIT_MESSAGE} - ${GIT_AUTHOR_EMAIL}"
+        description = "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${status}\n\n**Changes:**\n- `${commit}` *${GIT_COMMIT_MESSAGE}* - ${GIT_AUTHOR_EMAIL}"
 
         discordSend description: "${description}", footer: "${footer}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${title}", webhookURL: "${url}"
       }
