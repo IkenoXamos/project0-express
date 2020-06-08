@@ -2,7 +2,8 @@ pipeline {
   agent any
 
   tools {
-    nodejs "12.16.1"
+    nodejs '12.16.1'
+    'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'latest'
   }
 
   stages {
@@ -23,10 +24,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building...'
-        script {
-          image = docker.build('ikenoxamos/project0-express:latest')
-          echo "${image}"
-        }
+        sh 'docker build -t ikenoxamos/project0-express:latest .'
       }
     }
 
