@@ -1,7 +1,10 @@
 pipeline {
   agent any
 
-  tools {nodejs "12.16.1"}
+  tools {
+    nodejs "12.16.1"
+    docker "latest"
+  }
 
   stages {
     stage('Install Dependencies') {
@@ -15,6 +18,13 @@ pipeline {
       steps {
         echo 'Testing...'
         sh 'npm run test'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        echo 'Building...'
+        sh 'docker build -t ikenoxamos/project0-express:latest .'
       }
     }
 
