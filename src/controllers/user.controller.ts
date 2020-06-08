@@ -1,4 +1,3 @@
-import { User } from '../models/user';
 import { Request, Response, Router } from 'express';
 
 export default class UserController {
