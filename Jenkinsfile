@@ -23,7 +23,10 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building...'
-        docker.build('ikenoxamos/project0-express:latest')
+        script {
+          image = docker.build('ikenoxamos/project0-express:latest')
+          echo "${image}"
+        }
       }
     }
 
