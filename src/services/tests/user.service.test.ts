@@ -1,5 +1,5 @@
-import UserService from "../../services/user.service";
-import { User } from "../../models/user";
+import UserService from '../../services/user.service';
+import { User } from '../../models/user';
 
 describe('The UserService', () => {
   const service: UserService = new UserService();
@@ -12,7 +12,7 @@ describe('The UserService', () => {
     });
 
     it('should contain Users', () => {
-      if(result.length > 0) {
+      if (result.length > 0) {
         expect(result[0] instanceof User)
           .toBeTruthy();
       }
