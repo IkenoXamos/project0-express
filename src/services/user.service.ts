@@ -1,7 +1,18 @@
-import { User } from "../models/user";
+import { User } from '../models/user';
+import NonZeroIdError from 'exceptions/NonZeroIdError';
 
 export default class UserService {
-  getAllUsers(): Array<User> {
+  public getAllUsers(): Array<User> {
     return new Array<User>();
+  }
+
+  public createUser(u: User): User {
+    if (!u.id) {
+      throw new NonZeroIdError();
+    }
+
+    u.id = 1;
+
+    return u;
   }
 }

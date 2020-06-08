@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Controller from './controller.interface';
 import UserService from '../services/user.service';
+import { User } from 'models/user';
 
 export default class UserController implements Controller {
   public readonly path: string = '/user';
@@ -16,7 +17,8 @@ export default class UserController implements Controller {
     res.send(this.service.getAllUsers());
   }
 
-  public createUser = (_req: Request, res: Response) => {
-    res.send();
+  public createUser = (req: Request, res: Response): void => {
+    const u: User = req.body;
+    res.send(this.service.createUser(u));
   }
 }
