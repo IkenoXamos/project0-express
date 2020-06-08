@@ -3,7 +3,6 @@ pipeline {
 
   tools {
     nodejs "12.16.1"
-    docker "latest"
   }
 
   stages {
@@ -24,7 +23,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building...'
-        sh 'docker build -t ikenoxamos/project0-express:latest .'
+        docker.build('ikenoxamos/project0-express:latest')
       }
     }
 
