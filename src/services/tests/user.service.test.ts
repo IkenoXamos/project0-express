@@ -1,5 +1,6 @@
 import UserService from '../../services/user.service';
 import { User } from '../../models/user';
+import NonZeroIdError from '../../exceptions/NonZeroIdError';
 
 describe('The UserService', () => {
   const service: UserService = new UserService();
@@ -18,4 +19,19 @@ describe('The UserService', () => {
       }
     });
   });
+
+  describe('when creating a user', () => {
+    it('should succeed when id is zero', () => {
+      const result: any = service.createUser(new User());
+      expect(result instanceof User).toBeTruthy();
+      expect(result.id).toBeGreaterThan(0);
+    });
+
+    it('should throw an error when id is non-zero', () => {
+      const u: User = new User();
+      u.id = 5;
+
+      expect( () => {service.createUser(u); }).toThrowError(NonZeroIdError);
+    })
+  })
 });
