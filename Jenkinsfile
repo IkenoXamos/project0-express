@@ -1,7 +1,6 @@
 pipeline {
   agent {
     kubernetes {
-      label 'jenkins'
       defaultContainer 'jenkins-slave-with-docker'
       yamlFile 'jenkins-pod.yaml'
     }
