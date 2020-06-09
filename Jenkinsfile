@@ -1,5 +1,11 @@
 pipeline {
-  agent any
+  agent {
+    kubernetes {
+      label 'jenkins'
+      defaultContainer 'jenkins-slave-with-docker'
+      yamlFile 'jenkins-pod.yaml'
+    }
+  }
 
   tools {
     nodejs '12.16.1'
