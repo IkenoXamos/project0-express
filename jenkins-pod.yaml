@@ -14,6 +14,8 @@ spec:
           value: tcp://localhost:2375
         - name: JENKINS_URL
           value: http://34.82.179.165/
+        - name: JENKINS_TUNNEL
+          value: 10.56.0.42:5555/
     - name: dind-daemon
       image: docker:dind
       workingDir: /var/lib/docker
