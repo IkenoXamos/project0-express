@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: jenkins-slave
+  name: jnlp
 spec:
   containers:
-    - name: jenkins-slave-with-docker
-      image: korekontrol/jnlp-slave-docker
+    - name: jnlp
+      image: ikenoxamos/jenkins-slave:latest
       workingDir: /home/jenkins
       serviceAccountName: jenkins
       env:
