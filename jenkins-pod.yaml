@@ -6,7 +6,6 @@ spec:
   containers:
     - name: jenkins-slave-with-docker
       image: korekontrol/jnlp-slave-docker
-      command: ['/bin/sh -c']
       workingDir: /home/jenkins
       serviceAccountName: jenkins
       env:
