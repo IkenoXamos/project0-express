@@ -10,7 +10,7 @@ spec:
       serviceAccountName: jenkins
       env:
         - name: DOCKER_HOST
-          value: tcp://localhost:2375
+          value: tcp://localhost:2376
     - name: dind-daemon
       image: docker:dind
       workingDir: /var/lib/docker
