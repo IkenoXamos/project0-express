@@ -15,6 +15,7 @@ pipeline {
       steps {
         echo 'Installing dependencies...'
         sh 'npm install'
+        echo 'Successfully installed dependencies'
       }
     }
 
@@ -22,6 +23,7 @@ pipeline {
       steps {
         echo 'Testing...'
         sh 'npm run test'
+        echo 'Successfully run tests'
       }
     }
 
@@ -29,6 +31,7 @@ pipeline {
       steps {
         echo 'Building...'
         sh 'docker build -t ikenoxamos/project0-express:latest .'
+        echo 'Successfully built docker image'
       }
     }
 
