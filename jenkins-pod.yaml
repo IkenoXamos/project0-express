@@ -11,13 +11,6 @@ spec:
       env:
         - name: DOCKER_HOST
           value: tcp://localhost:2375
-<<<<<<< HEAD
-=======
-        - name: JENKINS_URL
-          value: http://34.82.179.165
-        - name: JENKINS_TUNNEL
-          value: http://34.82.179.165:5555
->>>>>>> 8ab07ead0061da877fad6b1a9cfece007a0ea92f
     - name: dind-daemon
       image: docker:dind
       workingDir: /var/lib/docker
