@@ -8,7 +8,6 @@ pipeline {
 
   tools {
     nodejs '12.16.1'
-    'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'latest'
   }
 
   stages {
