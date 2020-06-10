@@ -6,15 +6,10 @@ pipeline {
     }
   }
 
-  tools {
-    nodejs '12.16.1'
-  }
-
   stages {
     stage('Install Dependencies') {
       steps {
         echo 'Installing dependencies...'
-        sh 'npm install'
         echo 'Successfully installed dependencies'
       }
     }
@@ -22,7 +17,6 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Testing...'
-        sh 'npm run test'
         echo 'Successfully run tests'
       }
     }
