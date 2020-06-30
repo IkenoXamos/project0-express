@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: project0-express-deployment
+  labels:
+    app: project0-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project0-express
+  template:
+    metadata:
+      labels:
+        app: project0-express
+    spec:
+      containers:
+        - name: project0-express
+          image: ikenoxamos/project0-express:latest
+          containerPort: 9001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: project0-express-service
+spec:
+  type: ClusterIP
+  selector:
+    app: project0-express
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: project0-express-ingress
+spec:
+  rules:
+    - http:
+      paths:
+        - path: /project0-express/*
+          backend:
+            serviceName: project0-express-service
+            servicePort: 9001

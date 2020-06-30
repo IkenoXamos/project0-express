@@ -23,7 +23,7 @@ pipeline {
       steps {
         echo 'Testing...'
         sh 'npm run test'
-        echo 'Successfully run tests'
+        echo 'Successfully ran tests'
       }
     }
 
@@ -35,6 +35,18 @@ pipeline {
       }
     }
 
+    stage('Publish') {
+      steps {
+        echo 'Publishing...'
+
+        withDockerRegistry([ credentialsId: 'ikenoxamos-dockerhub', url: '' ]) {
+          sh 'docker push ikenoxamos/project0-express:latest'
+        }
+
+        echo 'Successfully published image'
+      }
+    }
+
     stage('Deploy') {
       when {
         expression {
@@ -43,17 +55,18 @@ pipeline {
       }
       steps {
         echo 'Deploying...'
-        withKubeConfig([credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "https://${KUBERNETES_SERVICE_HOST}"]) {
-          sh 'kubectl version'
+
+        withKubeConfig([ credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "https://${KUBERNETES_SERVICE_HOST}" ]) {
+          sh 'kubectl apply -f project0-express.yaml'
         }
+
+        echo 'Successfully Deployed'
       }
     }
   }
 
   post {
     always {
-      sh "printenv"
-
       script {
         status = "${currentBuild.currentResult.toLowerCase()}"
 
