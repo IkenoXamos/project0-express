@@ -43,8 +43,9 @@ pipeline {
       }
       steps {
         echo 'Deploying...'
-        withKubeConfig([credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "${env.KUBERNETES_URL}"])
-        sh 'kubectl version'
+        withKubeConfig([credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "https://${KUBERNETES_SERVICE_HOST}"]) {
+          sh 'kubectl version'
+        }
       }
     }
   }
