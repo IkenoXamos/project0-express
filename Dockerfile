@@ -3,7 +3,7 @@ FROM node:lts
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-COPY dist/* .
+COPY dist/* ./
 
 RUN npm ci --only=production
 
