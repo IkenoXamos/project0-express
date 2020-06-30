@@ -43,6 +43,7 @@ pipeline {
       }
       steps {
         echo 'Deploying...'
+        sh 'kubectl version --client'
       }
     }
   }
