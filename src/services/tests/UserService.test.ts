@@ -1,5 +1,5 @@
-import UserService from '../../services/user.service';
-import { User } from '../../models/user';
+import UserService from '../../services/UserService';
+import { User } from '../../models/User';
 import NonZeroIdError from '../../exceptions/NonZeroIdError';
 
 describe('The UserService', () => {

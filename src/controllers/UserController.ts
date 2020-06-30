@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
-import Controller from './controller.interface';
-import UserService from '../services/user.service';
-import { User } from 'models/user';
+import Controller from './Controller';
+import UserService from '../services/UserService';
+import { User } from 'models/User';
 
 export default class UserController implements Controller {
   public readonly path: string = '/user';

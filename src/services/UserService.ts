@@ -1,4 +1,4 @@
-import { User } from '../models/user';
+import { User } from '../models/User';
 import NonZeroIdError from '../exceptions/NonZeroIdError';
 
 export default class UserService {
