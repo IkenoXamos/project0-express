@@ -40,8 +40,8 @@ metadata:
 spec:
   rules:
     - http:
-      paths:
-        - path: /project0-express/*
-          backend:
-            serviceName: project0-express-service
-            servicePort: 9001
+        paths:
+          - path: /project0-express/*
+            backend:
+              serviceName: project0-express-service
+              servicePort: 9001
