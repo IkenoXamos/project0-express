@@ -51,7 +51,7 @@ pipeline {
 
   post {
     always {
-      sh "${env}"
+      sh "printenv"
 
       script {
         status = "${currentBuild.currentResult.toLowerCase()}"
