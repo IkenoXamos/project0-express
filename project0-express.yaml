@@ -17,6 +17,7 @@ spec:
       containers:
         - name: project0-express
           image: ikenoxamos/project0-express:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 9001
 ---
