@@ -43,13 +43,15 @@ pipeline {
       }
       steps {
         echo 'Deploying...'
-        sh 'kubectl version --client'
+        withKubeConfig([credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "${env.KUBERNETES_URL}"])
+        sh 'kubectl version'
       }
     }
   }
 
   post {
     always {
+      sh "${env}"
 
       script {
         status = "${currentBuild.currentResult.toLowerCase()}"
