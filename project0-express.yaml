@@ -17,7 +17,8 @@ spec:
       containers:
         - name: project0-express
           image: ikenoxamos/project0-express:latest
-          containerPort: 9001
+          ports:
+            - containerPort: 9001
 ---
 apiVersion: v1
 kind: Service
