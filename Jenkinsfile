@@ -30,6 +30,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building...'
+        sh 'tsc'
         sh 'docker build -t ikenoxamos/project0-express:latest .'
         echo 'Successfully built image'
       }

@@ -10,7 +10,6 @@
     "lint": "tslint src/**/*.ts",
     "lint:fix": "tslint src/**/*.ts --fix"
   },
-  "type": "module",
   "author": "IkenoXamos",
   "license": "ISC",
   "dependencies": {

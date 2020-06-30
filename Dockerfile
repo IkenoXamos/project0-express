@@ -3,11 +3,10 @@ FROM node:lts
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY dist/* .
 
 RUN npm ci --only=production
 
-COPY . .
-
 EXPOSE 9001
 
-ENTRYPOINT ["node", "src/index.ts"]
+ENTRYPOINT ["node", "index.js"]
