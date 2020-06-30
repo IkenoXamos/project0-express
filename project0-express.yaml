@@ -17,6 +17,10 @@ spec:
       containers:
         - name: project0-express
           image: ikenoxamos/project0-express:latest
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9001
           imagePullPolicy: Always
           ports:
             - containerPort: 9001

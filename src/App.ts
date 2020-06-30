@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyparser from 'body-parser';
+import healthcheck from 'express-healthcheck';
 
 export default class App {
   public port: number;
@@ -24,6 +25,7 @@ export default class App {
 
   private initializeMiddleware(): void {
     this.app.use(bodyparser.json());
+    this.app.use('/health', healthcheck());
   }
 
   private initializeControllers(controllers: Array<any>): void {
