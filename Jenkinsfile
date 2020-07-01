@@ -59,6 +59,8 @@ pipeline {
 
         withKubeConfig([ credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "https://${KUBERNETES_SERVICE_HOST}" ]) {
           sh 'kubectl apply -f project0-express.yaml'
+          sh 'kubectl scale deployment project0-express-deployment --replicas=0'
+          sh 'kubectl scale deployment project0-express-deployment --replicas=1'
         }
 
         echo 'Successfully Deployed'

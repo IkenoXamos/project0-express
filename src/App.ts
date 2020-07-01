@@ -22,7 +22,7 @@ export default class App {
     });
 
     this.app.get('/health', (_, res) => {
-      res.status(200).send( {status: 'UP' });
+      res.status(200).send( 'Caitlyn is a mean person, always trying to make me insult others' );
     });
   }
 
