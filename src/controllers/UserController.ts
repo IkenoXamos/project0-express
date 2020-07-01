@@ -8,7 +8,7 @@ export default class UserController implements Controller {
   public readonly router: Router = Router();
   private readonly service: UserService = new UserService();
 
-  public initializeRoutes() {
+  public initializeRoutes(): void {
     this.router.get(this.path, this.getAllUsers);
     this.router.post(this.path, this.createUser);
   }

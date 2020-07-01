@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyparser from 'body-parser';
+import Controller from './controllers/Controller';
 
 export default class App {
   public port: number;
@@ -30,7 +31,8 @@ export default class App {
   }
 
   private initializeControllers(controllers: Array<any>): void {
-    controllers.forEach( (controller) => {
+    controllers.forEach( (controller: Controller) => {
+      controller.initializeRoutes();
       this.app.use('/', controller.router);
     });
   }
