@@ -1,6 +1,6 @@
-import UserService from '../../services/UserService';
-import { User } from '../../models/User';
-import NonZeroIdError from '../../exceptions/NonZeroIdError';
+import { User } from "../../models/user";
+import UserService from "../userService";
+import NonZeroIdError from "../../exceptions/nonZeroIdError";
 
 describe('The UserService', () => {
   const service: UserService = new UserService();

@@ -1,4 +1,4 @@
-import App from './App';
+import App from './app';
 import UserController from './controllers/UserController';
 
 const app = new App(

@@ -1,5 +1,5 @@
-import { User } from '../models/User';
-import NonZeroIdError from '../exceptions/NonZeroIdError';
+import { User } from '../models/user';
+import NonZeroIdError from '../exceptions/nonZeroIdError';
 
 export default class UserService {
 
