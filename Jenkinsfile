@@ -8,6 +8,7 @@ pipeline {
 
   tools {
     nodejs '12.16.1'
+    sonar 'sonar-scanner'
   }
 
   stages {
@@ -24,6 +25,13 @@ pipeline {
         echo 'Testing...'
         sh 'npm run test'
         echo 'Successfully ran tests'
+      }
+    }
+
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv() {
+          sh "${scannerHome}/bin/sonar-scanner"
       }
     }
 
