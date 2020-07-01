@@ -8,7 +8,6 @@ pipeline {
 
   tools {
     nodejs '12.16.1'
-    sonar 'sonar-scanner'
   }
 
   stages {
