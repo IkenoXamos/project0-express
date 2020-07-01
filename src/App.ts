@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyparser from 'body-parser';
-import healthcheck from 'express-healthcheck';
 
 export default class App {
   public port: number;
@@ -19,13 +18,15 @@ export default class App {
       console.log(`${username} tried to login with password ${password}`);
 
       res.status(200).send(`${username} has successfully logged in`);
-      res.status(200).send();
+    });
+
+    this.app.get('/health', (_, res) => {
+      res.status(200).send( {status: 'UP' });
     });
   }
 
   private initializeMiddleware(): void {
     this.app.use(bodyparser.json());
-    this.app.use('/health', healthcheck());
   }
 
   private initializeControllers(controllers: Array<any>): void {
