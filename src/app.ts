@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyparser from 'body-parser';
-import Controller from './controllers/Controller';
+import Controller from './controllers/controller';
 
 export default class App {
   public port: number;

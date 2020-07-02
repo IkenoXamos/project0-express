@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import Controller from './Controller';
+import Controller from './controller';
 import UserService from '../services/userService';
 import { User } from '../models/user';
 
