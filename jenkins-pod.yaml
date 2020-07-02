@@ -13,10 +13,10 @@ spec:
           value: tcp://localhost:2375
       resources:
         requests:
-          memory: "300Mi"
+          memory: "500Mi"
           cpu: "0.3"
         limits:
-          memory: "500Mi"
+          memory: "800Mi"
           cpu: "0.5"
     - name: dind-daemon
       image: docker:18-dind
