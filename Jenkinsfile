@@ -21,24 +21,27 @@ pipeline {
 
     stage('Test & Build') {
       parallel {
-        stages {
-          stage('Test') {
-            steps {
-              echo 'Testing...'
-              sh 'npm run test'
-              echo 'Successfully ran tests'
+        stage('Test & Build') {
+          stages {
+            stage('Test') {
+              steps {
+                echo 'Testing...'
+                sh 'npm run test'
+                echo 'Successfully ran tests'
+              }
             }
-          }
 
-          stage('SonarQube Analysis') {
-            steps {
-              scannerHome = tool 'sonar-scanner'
-              withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'project0-express-sonar-token') {
-                sh "${scannerHome}/bin/sonar-scanner"
+            stage('SonarQube Analysis') {
+              steps {
+                scannerHome = tool 'sonar-scanner'
+                withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'project0-express-sonar-token') {
+                  sh "${scannerHome}/bin/sonar-scanner"
+                }
               }
             }
           }
         }
+
 
         stage('Build') {
           steps {
