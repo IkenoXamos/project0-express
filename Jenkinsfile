@@ -53,7 +53,7 @@ pipeline {
       steps {
         echo 'Publishing...'
 
-        withDockerRegistry([ credentialsId: 'ikenoxamos-dockerhub', url: '' ]) {
+        withDockerRegistry([ credentialsId: 'ikenoxamos-dockerhub' ]) {
           sh 'docker push ikenoxamos/project0-express:latest'
         }
 
