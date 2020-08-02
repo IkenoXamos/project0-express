@@ -4,8 +4,12 @@ pipeline {
       defaultContainer 'jnlp'
       yamlFile 'jenkins-pod.yaml'
     }
-
   }
+
+  tools {
+    nodejs '12.16.1'
+  }
+
   stages {
     stage('Install Dependencies') {
       steps {
@@ -15,13 +19,24 @@ pipeline {
       }
     }
 
-    stage('Test') {
+    stage('Test & Build') {
       parallel {
-        stage('Test') {
-          steps {
-            echo 'Testing...'
-            sh 'npm run test'
-            echo 'Successfully ran tests'
+        stages {
+          stage('Test') {
+            steps {
+              echo 'Testing...'
+              sh 'npm run test'
+              echo 'Successfully ran tests'
+            }
+          }
+
+          stage('SonarQube Analysis') {
+            steps {
+              scannerHome = tool 'sonar-scanner'
+              withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'project0-express-sonar-token') {
+                sh "${scannerHome}/bin/sonar-scanner"
+              }
+            }
           }
         }
 
@@ -33,17 +48,6 @@ pipeline {
             echo 'Successfully built image'
           }
         }
-
-      }
-    }
-
-    stage('SonarQube Analysis') {
-      steps {
-        tool 'sonar-scanner'
-        withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'project0-express-sonar-token') {
-          sh 'sonar-scanner'
-        }
-
       }
     }
 
@@ -64,24 +68,21 @@ pipeline {
         expression {
           currentBuild.currentResult == null || currentBuild.currentResult == 'SUCCESS'
         }
-
       }
+
       steps {
         echo 'Deploying...'
         withKubeConfig(credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "https://${KUBERNETES_SERVICE_HOST}") {
           sh '''kubectl apply -f project0-express.yaml
-kubectl scale deployment project0-express-deployment --replicas=0
-kubectl scale deployment project0-express-deployment --replicas=1'''
+                kubectl scale deployment project0-express-deployment --replicas=0
+                kubectl scale deployment project0-express-deployment --replicas=1'''
         }
 
         echo 'Successfully Deployed'
       }
     }
+  }
 
-  }
-  tools {
-    nodejs '12.16.1'
-  }
   post {
     always {
       script {
@@ -114,8 +115,6 @@ kubectl scale deployment project0-express-deployment --replicas=1'''
 
         discordSend description: "${description}", footer: "${footer}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${title}", webhookURL: "${url}"
       }
-
     }
-
   }
 }
