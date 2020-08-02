@@ -21,7 +21,7 @@ pipeline {
 
     stage('Test & Build') {
       parallel {
-        stage('Test & Build') {
+        stage('Test & SonarQube Analysis') {
           stages {
             stage('Test') {
               steps {
@@ -32,8 +32,11 @@ pipeline {
             }
 
             stage('SonarQube Analysis') {
-              steps {
+              environment {
                 scannerHome = tool 'sonar-scanner'
+              }
+
+              steps {
                 withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'project0-express-sonar-token') {
                   sh "${scannerHome}/bin/sonar-scanner"
                 }
@@ -41,7 +44,6 @@ pipeline {
             }
           }
         }
-
 
         stage('Build') {
           steps {
