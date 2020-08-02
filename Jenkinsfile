@@ -4,56 +4,54 @@ pipeline {
       defaultContainer 'jnlp'
       yamlFile 'jenkins-pod.yaml'
     }
-  }
 
-  tools {
-    nodejs '12.16.1'
   }
-
   stages {
     stage('Install Dependencies') {
       steps {
         echo 'Installing dependencies...'
-        sh 'npm install'
+        sh 'npm ci'
         echo 'Successfully installed dependencies'
       }
     }
 
     stage('Test') {
-      steps {
-        echo 'Testing...'
-        sh 'npm run test'
-        echo 'Successfully ran tests'
+      parallel {
+        stage('Test') {
+          steps {
+            echo 'Testing...'
+            sh 'npm run test'
+            echo 'Successfully ran tests'
+          }
+        }
+
+        stage('Build') {
+          steps {
+            echo 'Building...'
+            sh 'npm run tsc'
+            sh 'docker build -t ikenoxamos/project0-express:latest .'
+            echo 'Successfully built image'
+          }
+        }
+
       }
     }
 
     stage('SonarQube Analysis') {
-
       steps {
-        script {
-          def scannerHome = tool 'sonar-scanner'
-
-          withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'project0-express-sonar-token') {
-            sh "${scannerHome}/bin/sonar-scanner"
-          }
+        tool 'sonar-scanner'
+        withSonarQubeEnv(installationName: 'sonarcloud', credentialsId: 'project0-express-sonar-token') {
+          sh 'sonar-scanner'
         }
-      }
-    }
 
-    stage('Build') {
-      steps {
-        echo 'Building...'
-        sh 'npm run tsc'
-        sh 'docker build -t ikenoxamos/project0-express:latest .'
-        echo 'Successfully built image'
       }
     }
 
     stage('Publish') {
       steps {
+        waitForQualityGate true
         echo 'Publishing...'
-
-        withDockerRegistry([ credentialsId: 'ikenoxamos-dockerhub', url: 'https://index.docker.io/v1/' ]) {
+        withDockerRegistry(credentialsId: 'ikenoxamos-dockerhub', url: 'https://index.docker.io/v1/') {
           sh 'docker push ikenoxamos/project0-express:latest'
         }
 
@@ -66,21 +64,24 @@ pipeline {
         expression {
           currentBuild.currentResult == null || currentBuild.currentResult == 'SUCCESS'
         }
+
       }
       steps {
         echo 'Deploying...'
-
-        withKubeConfig([ credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "https://${KUBERNETES_SERVICE_HOST}" ]) {
-          sh 'kubectl apply -f project0-express.yaml'
-          sh 'kubectl scale deployment project0-express-deployment --replicas=0'
-          sh 'kubectl scale deployment project0-express-deployment --replicas=1'
+        withKubeConfig(credentialsId: 'jenkins-sa-test-cluster-text', serverUrl: "https://${KUBERNETES_SERVICE_HOST}") {
+          sh '''kubectl apply -f project0-express.yaml
+kubectl scale deployment project0-express-deployment --replicas=0
+kubectl scale deployment project0-express-deployment --replicas=1'''
         }
 
         echo 'Successfully Deployed'
       }
     }
-  }
 
+  }
+  tools {
+    nodejs '12.16.1'
+  }
   post {
     always {
       script {
@@ -113,6 +114,8 @@ pipeline {
 
         discordSend description: "${description}", footer: "${footer}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${title}", webhookURL: "${url}"
       }
+
     }
+
   }
 }
